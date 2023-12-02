@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-tour-of-heros": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "vi-VN": "src/locale/messages.vi.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -38,6 +44,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": [
+              "vi-VN"
+            ],
             "outputPath": "dist/angular-tour-of-heros",
             "index": "src/index.html",
             "browser": "src/main.ts",
