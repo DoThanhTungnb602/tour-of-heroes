@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Hero } from '../models/hero';
+import { Hero } from '../../models/hero';
 
 @Component({
   selector: 'app-hero-status',
@@ -9,6 +9,6 @@ import { Hero } from '../models/hero';
   templateUrl: './hero-status.component.html',
   styleUrl: './hero-status.component.css'
 })
-export class HeroStatusComponent {
+export default class HeroStatusComponent {
   @Input() hero!: Hero;
 }

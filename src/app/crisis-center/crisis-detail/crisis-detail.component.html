@@ -1,0 +1,12 @@
+@if (crisis$ | async; as crisis) {
+  <div>
+    <h2>{{crisis.name | uppercase}} Details</h2>
+    <div>id: {{crisis.id}}</div>
+    <div>
+      <label for="crisis-name">Crisis name: </label>
+      <input id="crisis-name" [(ngModel)]="crisis.name" placeholder="name">
+    </div>
+    <button type="button" (click)="goBackCrises(crisis)">Go back</button>
+    <button type="button" (click)="updateCrisis(crisis)">save</button>
+  </div>
+  }

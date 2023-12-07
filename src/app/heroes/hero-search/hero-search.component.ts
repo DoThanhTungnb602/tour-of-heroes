@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { HeroService } from '../services/hero.service';
-import { Hero } from '../models/hero';
+import { HeroService } from '../../services/hero.service';
+import { Hero } from '../../models/hero';
 import { Observable, Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({

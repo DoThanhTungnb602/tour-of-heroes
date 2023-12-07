@@ -1,0 +1,7 @@
+<div>
+  <label for="new-hero">Name: </label>
+  <input id="new-hero" type="text" #heroName>
+  <button type="button" class="add-button" (click)="add(heroName.value); heroName.value = ''">
+    Add hero
+  </button>
+</div>

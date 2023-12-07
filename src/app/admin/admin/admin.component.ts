@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-crisis-list',
+  selector: 'app-admin',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './crisis-list.component.html',
-  styleUrl: './crisis-list.component.css'
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.css'
 })
-export class CrisisListComponent {
+export default class AdminComponent {
 
 }

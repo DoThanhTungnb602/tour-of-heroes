@@ -10,17 +10,17 @@ import { InMemoryDataService } from './services/in-memory-data.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideHttpClient(),
-    provideAnimations(),
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
+    provideRouter(routes),
+    provideHttpClient(),
     importProvidersFrom([
       HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
         dataEncapsulation: false
       }),
       BrowserModule
     ]),
+    provideAnimations(),
   ],
 };

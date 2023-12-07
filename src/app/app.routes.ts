@@ -1,34 +1,37 @@
 import { Routes } from '@angular/router';
-import { HeroesComponent } from './heroes/heroes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { CrisisListComponent } from './crisis-list/crisis-list.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   {
-    path: 'heroes',
-    component: HeroesComponent
-  },
-  {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
   },
   {
     path: '',
     redirectTo: '/dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
-    path: 'detail/:id',
-    component: HeroDetailComponent
+    path: 'heroes',
+    loadChildren: () => import('./heroes/routes'),
   },
   {
     path: 'crisis-center',
-    component: CrisisListComponent,
+    loadChildren: () => import('./crisis-center/routes'),
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/routes'),
+  },
+  {
+    path: 'compose',
+    loadComponent: () =>
+      import('./shared/components/compose-message/compose-message.component'),
+    outlet: 'popup',
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-  }
+  },
 ];

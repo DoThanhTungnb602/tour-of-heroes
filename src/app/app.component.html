@@ -1,14 +1,21 @@
 <h1>
   {{title}}
 </h1>
+
 <nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/crisis-center">
+  <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+  <a routerLink="/crisis-center" routerLinkActive="active">
     Crisis Center
   </a>
-  <a routerLink="/heroes">Heroes</a>
+  <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+  <a routerLink="/admin">Admin</a>
+  <a [routerLink]="[{ outlets: { popup: ['compose']}}]">Contact</a>
 </nav>
 
-<app-async-observable-pipe />
-<router-outlet />
-<app-messages />
+<!-- <app-async-observable-pipe /> -->
+<div [@routeAnimation]="getAnimationData()">
+  <router-outlet />
+</div>
+<!-- <app-messages /> -->
+
+<router-outlet name="popup" />

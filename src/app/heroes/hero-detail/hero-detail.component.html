@@ -1,4 +1,4 @@
-@if (hero) {
+@if (hero$ | async; as hero) {
 <div>
   <h2>{{hero.name | uppercase}} Details</h2>
   <div>id: {{hero.id}}</div>
@@ -6,7 +6,7 @@
     <label for="hero-name">Hero name: </label>
     <input id="hero-name" [(ngModel)]="hero.name" placeholder="name">
   </div>
-  <button type="button" (click)="goBack()">Go back</button>
-  <button type="button" (click)="save()">save</button>
+  <button type="button" (click)="goBack(hero)">Go back</button>
+  <button type="button" (click)="save(hero)">save</button>
 </div>
 }

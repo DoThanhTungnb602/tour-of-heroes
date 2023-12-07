@@ -16,6 +16,7 @@ nav a {
   background-color: #e8e8e8;
   color: #3d3d3d;
   border-radius: 4px;
+  transition: all 0.2s ease-in-out;
 }
 
 nav a:hover {
@@ -23,6 +24,7 @@ nav a:hover {
   background-color: #42545C;
 }
 
-nav a:active {
-  background-color: black;
+nav a.active {
+  color: white;
+  background-color: #42545C;
 }

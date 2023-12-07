@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
-
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ChildrenOutletContexts,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 
-import { HeroesComponent } from './heroes/heroes.component';
 import { MessagesComponent } from './messages/messages.component';
-import { AsyncObservablePipeComponent } from './async-observable-pipe/async-observable-pipe.component';
+import { AsyncObservablePipeComponent } from './shared/components/async-observable-pipe/async-observable-pipe.component';
+import { slideInAnimation } from './animations';
 
 @Component({
   selector: 'app-root',
@@ -14,14 +17,20 @@ import { AsyncObservablePipeComponent } from './async-observable-pipe/async-obse
     CommonModule,
     RouterOutlet,
     RouterModule,
-
-    HeroesComponent,
     MessagesComponent,
     AsyncObservablePipeComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  animations: [slideInAnimation],
 })
 export class AppComponent {
   title = 'Tour of heros';
+  private contexts: ChildrenOutletContexts = inject(ChildrenOutletContexts);
+
+  getAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
+  }
 }
