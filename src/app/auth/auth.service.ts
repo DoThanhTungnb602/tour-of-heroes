@@ -6,7 +6,7 @@ import { Observable, delay, of, tap } from 'rxjs';
 })
 export class AuthService {
   isLoggedIn = false;
-  redirectUrl: string | null = null;
+  redirectUrl: string = '/admin';
   login(): Observable<boolean> {
     return of(true).pipe(
       delay(1000),

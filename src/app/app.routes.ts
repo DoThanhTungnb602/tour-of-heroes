@@ -13,6 +13,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'login',
+    loadComponent: () => import('./auth/login/login.component')
+  },
+  {
     path: 'heroes',
     loadChildren: () => import('./heroes/routes'),
   },

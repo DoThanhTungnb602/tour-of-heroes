@@ -9,6 +9,7 @@ export default [
     children: [
       {
         path: '',
+        canActivateChild: [authGuard],
         children: [
           {
             path: 'crises',

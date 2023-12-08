@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { canDeactivateGuard } from '../guards/can-deactivate.guard';
+import { crisisDetailResolver } from './crisis-detail.resolver';
 
 export default [
   {
@@ -13,6 +15,10 @@ export default [
             path: ':id',
             loadComponent: () =>
               import('./crisis-detail/crisis-detail.component'),
+            canDeactivate: [canDeactivateGuard],
+            resolve: {
+              crisis: crisisDetailResolver,
+            },
           },
           {
             path: '',

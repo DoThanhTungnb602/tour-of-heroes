@@ -1,7 +1,7 @@
 <ul class="heroes">
   @for (crisis of crises$ | async; track crisis.id) {
   <li [class.selected]="crisis.id === selectedId">
-    <a [routerLink]="['/crisis-center', crisis.id]">
+    <a [routerLink]="[crisis.id]">
       <span class="badge">{{crisis.id}}</span> {{crisis.name}}
     </a>
     <button type="button" class="delete" title="delete crisis" (click)="delete(crisis)">x</button>
