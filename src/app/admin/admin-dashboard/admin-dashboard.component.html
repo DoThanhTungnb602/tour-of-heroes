@@ -1,10 +1,15 @@
 <h3>Dashboard</h3>
 
-<p>Session ID: {{ sessionId | async }}</p>
+<p>Session ID: {{ sessionId }}</p>
 <div id="anchor"></div>
-<p>Token: {{ token | async }}</p>
+<p>Token: {{ token }}</p>
 
-<!-- Preloaded Modules
+Preloaded Modules
+
 <ul>
-  <li *ngFor="let module of modules">{{ module }}</li>
-</ul> -->
+  @for (module of preloadedModules; track $index) {
+  <li>{{ module }}</li>
+  }@empty {
+  <li><em>none</em></li>
+  }
+</ul>

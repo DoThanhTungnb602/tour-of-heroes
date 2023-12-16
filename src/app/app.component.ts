@@ -26,7 +26,8 @@ import { slideInAnimation } from './animations';
 })
 export class AppComponent {
   title = 'Tour of heros';
-  private contexts: ChildrenOutletContexts = inject(ChildrenOutletContexts);
+
+  private contexts = inject(ChildrenOutletContexts);
 
   getAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.[

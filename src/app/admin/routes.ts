@@ -5,7 +5,7 @@ export default [
   {
     path: '',
     loadComponent: () => import('./admin/admin.component'),
-    canActivate: [authGuard],
+    canMatch: [authGuard],
     children: [
       {
         path: '',

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import HERO_ROUTES from './heroes/routes';
 
 export const routes: Routes = [
   {
@@ -14,15 +15,16 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./auth/login/login.component')
+    loadComponent: () => import('./auth/login/login.component'),
   },
   {
     path: 'heroes',
-    loadChildren: () => import('./heroes/routes'),
+    children: HERO_ROUTES,
   },
   {
     path: 'crisis-center',
     loadChildren: () => import('./crisis-center/routes'),
+    data: { preload: true },
   },
   {
     path: 'admin',

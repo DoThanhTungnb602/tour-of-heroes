@@ -8,10 +8,15 @@ export const crisisDetailResolver: ResolveFn<Crisis> = (route) => {
   const router = inject(Router);
   const crisisService: CrisisService = inject(CrisisService);
   const id = route.paramMap.get('id');
+
   return crisisService.getCrisis(Number(id)).pipe(
     switchMap((crisis) => {
-      if (crisis) return of(crisis);
-      return EMPTY;
+      if (crisis) {
+        return of(crisis);
+      } else {
+        router.navigate(['/crisis-center']);
+        return EMPTY;
+      }
     })
   );
 };

@@ -9,7 +9,7 @@ import {
 import { CrisisService } from '../../services/crisis.service';
 import { Crisis } from '../../models/crisis';
 import { MessageService } from '../../services/message.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-crisis-list',
@@ -19,10 +19,11 @@ import { Observable, switchMap } from 'rxjs';
   styleUrl: './crisis-list.component.css',
 })
 export default class CrisisListComponent {
-  private crisisService: CrisisService = inject(CrisisService);
-  private messageService: MessageService = inject(MessageService);
-  private route: ActivatedRoute = inject(ActivatedRoute);
-  public selectedId: number = 0;
+  private crisisService = inject(CrisisService);
+  private messageService = inject(MessageService);
+
+  private unsubscribeAll = new Subject<void>();
+  public selectedId = 0;
   public crises$!: Observable<Crisis[]>;
 
   ngOnInit() {
@@ -30,12 +31,7 @@ export default class CrisisListComponent {
   }
 
   getCrises(): Observable<Crisis[]> {
-    return this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.selectedId = Number(params.get('id'));
-        return this.crisisService.getCrises();
-      })
-    );
+    return this.crisisService.getCrises().pipe(takeUntil(this.unsubscribeAll));
   }
 
   delete(crisis: Crisis) {
