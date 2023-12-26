@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroFormComponent } from './hero-form/hero-form.component';
 import HeroListComponent from './hero-list/hero-list.component';

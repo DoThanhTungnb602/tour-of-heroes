@@ -32,7 +32,7 @@ export default class HeroListComponent {
       switchMap((params: ParamMap) => {
         this.selectedId = Number(params.get('id'));
         return this.heroService.getHeroes();
-      })
+      }),
     );
   }
 

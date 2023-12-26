@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  InjectionToken,
+  importProvidersFrom,
+} from '@angular/core';
 import { provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -10,11 +14,15 @@ import { InMemoryDataService } from './services/in-memory-data.service';
 import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
 import { noopInterceptor } from './interceptor/noop.interceptor';
 
+export type AppConfig = {
+  title: string;
+  theme: string;
+};
+ 
+export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
     provideRouter(routes, withPreloading(SelectivePreloadingStrategyService)),
     provideHttpClient(withInterceptors([noopInterceptor])),
     importProvidersFrom([
@@ -24,5 +32,12 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
     ]),
     provideAnimations(),
+    {
+      provide: APP_CONFIG,
+      useValue: {
+        title: 'Tour of heroes',
+        theme: 'light',
+      },
+    },
   ],
 };

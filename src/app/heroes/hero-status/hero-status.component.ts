@@ -7,7 +7,7 @@ import { Hero } from '../../models/hero';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './hero-status.component.html',
-  styleUrl: './hero-status.component.css'
+  styleUrl: './hero-status.component.css',
 })
 export default class HeroStatusComponent {
   @Input() hero!: Hero;

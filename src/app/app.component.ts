@@ -9,6 +9,7 @@ import {
 import { MessagesComponent } from './messages/messages.component';
 import { AsyncObservablePipeComponent } from './shared/components/async-observable-pipe/async-observable-pipe.component';
 import { slideInAnimation } from './animations';
+import { APP_CONFIG } from './app.config';
 
 @Component({
   selector: 'app-root',
@@ -25,9 +26,14 @@ import { slideInAnimation } from './animations';
   animations: [slideInAnimation],
 })
 export class AppComponent {
-  title = 'Tour of heros';
+  title = '';
 
   private contexts = inject(ChildrenOutletContexts);
+  private config = inject(APP_CONFIG);
+
+  constructor() {
+    this.title = this.config.title;
+  }
 
   getAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
