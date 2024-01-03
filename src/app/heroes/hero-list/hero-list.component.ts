@@ -20,20 +20,18 @@ export default class HeroListComponent {
   private heroService: HeroService = inject(HeroService);
   private messageService: MessageService = inject(MessageService);
   private route: ActivatedRoute = inject(ActivatedRoute);
+
   public selectedId: number = 0;
   public heroes$!: Observable<Hero[]>;
 
   ngOnInit() {
-    this.getHeroes();
-  }
-
-  getHeroes(): void {
-    this.heroes$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.selectedId = Number(params.get('id'));
-        return this.heroService.getHeroes();
-      }),
-    );
+    // this.heroes$ = this.route.paramMap.pipe(
+    //   switchMap((params: ParamMap) => {
+    //     this.selectedId = Number(params.get('id'));
+    //     return this.heroService.getHeroes();
+    //   })
+    // );
+    this.heroes$ = this.heroService.getHeroes();
   }
 
   delete(hero: Hero): void {

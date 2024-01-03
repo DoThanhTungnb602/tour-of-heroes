@@ -1,19 +1,14 @@
 <ul class="heroes">
   @for (hero of heroes$ | async; track hero.id) {
-    <li [class.selected]="hero.id === selectedId">
-      <a [routerLink]="['/heroes', hero.id]">
-        <span class="badge">{{ hero.id }}</span> {{ hero.name }}
-      </a>
-      <button
-        type="button"
-        class="delete"
-        title="delete hero"
-        (click)="delete(hero)"
-      >
-        x
-      </button>
-    </li>
+  <li [class.selected]="hero.id === selectedId">
+    <a [routerLink]="['/heroes', hero.id]">
+      <span class="badge">{{ hero.id }}</span> {{ hero.name }}
+    </a>
+    <button type="button" class="delete" title="delete hero" (click)="delete(hero)">
+      x
+    </button>
+  </li>
   } @empty {
-    <li><span class="badge">empty</span> No heroes yet.</li>
+  <li><span class="badge">empty</span> No heroes yet.</li>
   }
 </ul>

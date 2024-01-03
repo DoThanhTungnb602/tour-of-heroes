@@ -1,21 +1,27 @@
-<h1>
-  {{title}}
-</h1>
+<main class="p-5">
+  <h1>
+    {{title}}
+  </h1>
 
-<nav>
-  <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-  <a routerLink="/crisis-center" routerLinkActive="active">
-    Crisis Center
-  </a>
-  <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
-  <a routerLink="/admin">Admin</a>
-  <a [routerLink]="[{ outlets: { popup: ['compose']}}]">Contact</a>
-</nav>
+  <nav>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/crisis-center" routerLinkActive="active">
+      Crisis Center
+    </a>
+    <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+    <a routerLink="/admin">Admin</a>
+    <a routerLink="/dynamic-form">Dynamic form</a>
+    <a routerLink="/diagram">Diagram</a>
+    <a routerLink="/diagram/mermaid">Mermaid diagram</a>
+    <a routerLink="/diagram/drawio">Drawio diagram</a>
+    <a routerLink="/diagram/mxgraph">Mxgraph diagram</a>
+    <a [routerLink]="[{ outlets: { popup: ['compose']}}]">Contact</a>
+  </nav>
+  <!-- <app-async-observable-pipe /> -->
+  <div [@routeAnimation]="getAnimationData()">
+    <router-outlet />
+  </div>
+  <!-- <app-messages /> -->
 
-<!-- <app-async-observable-pipe /> -->
-<div [@routeAnimation]="getAnimationData()">
-  <router-outlet />
-</div>
-<!-- <app-messages /> -->
-
-<router-outlet name="popup" />
+  <router-outlet name="popup" />
+</main>

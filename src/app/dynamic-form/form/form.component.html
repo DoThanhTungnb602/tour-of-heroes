@@ -1,0 +1,75 @@
+@if (formData !== undefined) {
+<form nz-form [nzLayout]="formData.formLayout" (ngSubmit)="onSubmit()" [formGroup]="form">
+  @for (control of formData.controls; track $index) {
+  <nz-form-item>
+    <nz-form-label>
+      {{control.label}}
+    </nz-form-label>
+    <nz-form-control>
+      @if (['text', 'password', 'email', 'search', 'tel', 'url'].includes(control.type)) {
+      <input nz-input [formControlName]="control.name" [type]="control.type" />
+      }
+      @if(control.type === 'number'){
+      <nz-input-number [formControlName]="control.name" />
+      }
+      @if(control.type === 'textarea'){
+      <textarea nz-input [formControlName]="control.name"></textarea>
+      }
+      @if(control.type === 'checkbox') {
+      <label nz-checkbox [formControlName]="control.name"></label>
+      }
+      @if(control.type === 'date') {
+      <nz-date-picker [formControlName]="control.name" [nzPlaceHolder]="control.label" />
+      }
+      @if(control.type === 'radio') {
+      <nz-radio-group [formControlName]="control.name">
+        @for (option of control.radioOptions; track $index) {
+        <label nz-radio [nzValue]="option.value">{{option.label}}</label>
+        }
+      </nz-radio-group>
+      }
+      @if(control.type === 'select') {
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [formControlName]="control.name">
+        @for (option of control.selectOptions; track $index) {
+        <nz-option [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        }
+      </nz-select>
+      }
+      @if(control.type === 'uploadImage') {
+      <nz-upload class="avatar-uploader" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzName="avatar"
+        nzListType="picture-card" [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload"
+        (nzChange)="handleChange($event)">
+        @if(!avatarUrl) {
+        <span class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></span>
+        <div class="ant-upload-text">Upload</div>
+        }
+        @if(avatarUrl){
+        <img [src]="avatarUrl" style="width: 100%" />
+        }
+      </nz-upload>
+      }
+      @if (control.type === 'uploadMultiImage') {
+      <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture-card"
+        [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 8" [nzPreview]="handlePreview">
+        <div>
+          <span nz-icon [nzType]="'plus'"></span>
+          <div style="margin-top: 8px">Upload</div>
+        </div>
+      </nz-upload>
+      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+        (nzOnCancel)="previewVisible = false">
+        <ng-template #modalContent>
+          <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+        </ng-template>
+      </nz-modal>
+      }
+      @if (control.type === 'uploadFiles') {
+      <app-upload-file [fileList]="fileList"></app-upload-file>
+      }
+    </nz-form-control>
+  </nz-form-item>
+  }
+  <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+    (click)="onSubmit()">Submit</button>
+</form>
+}

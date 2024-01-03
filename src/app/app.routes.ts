@@ -31,6 +31,14 @@ export const routes: Routes = [
     loadChildren: () => import('./admin/routes'),
   },
   {
+    path: 'dynamic-form',
+    loadChildren: () => import('./dynamic-form/routes'),
+  },
+  {
+    path: 'diagram',
+    loadChildren: () => import('./diagram/routes'),
+  },
+  {
     path: 'compose',
     loadComponent: () =>
       import('./shared/components/compose-message/compose-message.component'),

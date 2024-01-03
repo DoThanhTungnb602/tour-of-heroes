@@ -1,0 +1,173 @@
+{
+  "heroes": [],
+  "crises": [
+    {
+      "id": 3,
+      "name": "Giant Asteroid Heading For Earth"
+    },
+    {
+      "id": 4,
+      "name": "Procrastinators Meeting Delayed Again"
+    }
+  ],
+  "form-data": {
+    "formLayout": "horizontal",
+    "controls": [
+      {
+        "name": "firstName",
+        "label": "First name",
+        "value": "",
+        "type": "text",
+        "validators": {
+          "required": true,
+          "minLength": 10
+        }
+      },
+      {
+        "name": "lastName",
+        "label": "Last name",
+        "value": "",
+        "type": "text",
+        "validators": {}
+      },
+      {
+        "name": "comments",
+        "label": "Comments",
+        "value": "",
+        "type": "textarea",
+        "validators": {}
+      },
+      {
+        "name": "number",
+        "label": "Number",
+        "value": "2",
+        "type": "number",
+        "validators": {}
+      },
+      {
+        "name": "createdAt",
+        "label": "Created At",
+        "value": "",
+        "type": "date",
+        "validators": {}
+      },
+      {
+        "name": "agreeTerms",
+        "label": "This is a checkbox?",
+        "value": "false",
+        "type": "checkbox",
+        "validators": {}
+      },
+      {
+        "name": "lightDark",
+        "label": "Do you like toggles?",
+        "value": "false",
+        "type": "toggle",
+        "validators": {}
+      },
+      {
+        "name": "friuts",
+        "label": "What is your favorite fruit?",
+        "value": "banana",
+        "type": "radio",
+        "validators": {},
+        "radioOptions": [
+          {
+            "label": "Apple",
+            "value": "apple"
+          },
+          {
+            "label": "Orange",
+            "value": "orange"
+          },
+          {
+            "label": "Banana",
+            "value": "banana"
+          }
+        ]
+      },
+      {
+        "name": "person",
+        "label": "Select a person",
+        "value": "2",
+        "type": "select",
+        "validators": {},
+        "selectOptions": [
+          {
+            "label": "Hoa",
+            "value": "1"
+          },
+          {
+            "label": "Lan",
+            "value": "2"
+          },
+          {
+            "label": "Le",
+            "value": "3"
+          }
+        ]
+      },
+      {
+        "name": "image",
+        "label": "Upload Image",
+        "value": "",
+        "type": "uploadImage",
+        "validators": {}
+      },
+      {
+        "name": "images",
+        "label": "Upload Images",
+        "value": "",
+        "type": "uploadMultiImage",
+        "validators": {},
+        "fileList": [
+          {
+            "uid": "-1",
+            "name": "image.png",
+            "status": "done",
+            "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          },
+          {
+            "uid": "-xxx",
+            "percent": 50,
+            "name": "image.png",
+            "status": "uploading",
+            "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          },
+          {
+            "uid": "-5",
+            "name": "image.png",
+            "status": "error"
+          }
+        ]
+      },
+      {
+        "name": "files",
+        "label": "Upload Files",
+        "value": "",
+        "type": "uploadFiles",
+        "validators": {},
+        "fileList": [
+          {
+            "uid": "-1",
+            "name": "image.png",
+            "status": "done",
+            "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          },
+          {
+            "uid": "-xxx",
+            "percent": 50,
+            "name": "image.png",
+            "status": "uploading",
+            "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+          },
+          {
+            "uid": "-5",
+            "name": "image.png",
+            "status": "error"
+          }
+        ]
+      }
+    ]
+  }
+}

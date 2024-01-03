@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { MessageService } from './message.service';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { Crisis } from '../models/crisis';
+import { APP_CONFIG } from '../app.config';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ import { Crisis } from '../models/crisis';
 export class CrisisService {
   private http: HttpClient = inject(HttpClient);
   private messageService: MessageService = inject(MessageService);
-  private crisisUrl = 'api/crisis';
+  private config = inject(APP_CONFIG);
+  private crisisUrl = `${this.config.baseApiUrl}/api/crises`;
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };

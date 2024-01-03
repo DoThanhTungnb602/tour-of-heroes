@@ -46,13 +46,31 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@zklogic/draw.io/dist/mxgraph",
+                "output": "./mxgraph"
+              },
+              { "glob": "**/*", "input": "./node_modules/mxgraph/javascript/src", "output": "/assets/mxgraph" },
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/devexpress-diagram/dist/dx-diagram.min.css",
+              "./node_modules/@zklogic/draw.io/dist/mxgraph/styles/grapheditor.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/config/mxgraph-config.js",
+              "node_modules/mxgraph/javascript/mxClient.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -109,6 +127,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.css"
             ],
             "scripts": []
