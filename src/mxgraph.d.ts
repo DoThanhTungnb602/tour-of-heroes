@@ -4,3 +4,7 @@
 /// <reference path="./mxtypes/Shape.d.ts" />
 /// <reference path="./mxtypes/Util.d.ts" />
 /// <reference path="./mxtypes/View.d.ts" />
+
+declare class mxConstants{
+
+}

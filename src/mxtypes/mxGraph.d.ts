@@ -8,6 +8,7 @@
 declare class mxGraph {
 
   constructor(container: any);
+  static mxConstants;
 
   mouseListeners;
   isMouseDown;
@@ -121,6 +122,7 @@ declare class mxGraph {
   alreadyConnectedResource;
   containsValidationErrorsResource;
   collapseExpandResource;
+  connectionHandler;
   getTooltipForCell(cell);
   init(container);
   createHandlers(container);
@@ -196,7 +198,7 @@ declare class mxGraph {
   addCells(cells, parent, index, source, target);
   cellsAdded(cells, parent, index, source, target, absolute, constrain);
   autoSizeCell(cell, recurse);
-  removeCells(cells, includeEdges);
+  removeCells(cells, includeEdges?: any);
   cellsRemoved(cells);
   splitEdge(edge, cells, newEdge, dx, dy);
   toggleCells(show, cells, includeEdges);
@@ -418,7 +420,7 @@ declare class mxGraph {
   hitsSwimlaneContent(swimlane, x, y);
   getChildVertices(parent);
   getChildEdges(parent);
-  getChildCells(parent, vertices, edges);
+  getChildCells(parent, vertices?, edges?);
   getConnections(cell, parent);
   getIncomingEdges(cell, parent);
   getOutgoingEdges(cell, parent);

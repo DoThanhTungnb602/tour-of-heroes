@@ -1,6 +1,15 @@
 /******************      Model         **************/
 
 declare class mxCell {
+  constructor(
+    parent?: any,
+    id?: any,
+    source?: any,
+    target?: any,
+    value?: any,
+    geometry?: any,
+    style?: any
+  );
   id: any;
   value;
   geometry;

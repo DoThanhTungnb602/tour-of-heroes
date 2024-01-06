@@ -231,6 +231,7 @@ declare class mxConstraintHandler {
 }
 
 declare class mxEdgeHandler {
+  curved: boolean;
 
   /** Graph event handler that reconnects edges and modifies control points and the edge label location.
    * Uses <mxTerminalMarker> for finding and highlighting new source and target vertices.  This handler is

@@ -1,2 +1,18 @@
-<div #graphContainer id="graphContainer">
+<div class="w-full flex h-[500px] py-4 gap-4">
+  <div class="flex flex-col gap-4">
+    <button nz-button nzType="primary" nzSize="large" (click)="addBlock()">
+      <span nz-icon nzType="plus-circle"></span>
+      Thêm quy trình
+    </button>
+    <button nz-button nzType="primary" nzSize="large" (click)="removeCells()" [disabled]="selectedCells.length === 0">
+      <span nz-icon nzType="delete"></span>
+      Xóa
+    </button>
+  </div>
+  <div #graphContainer id="graphContainer" class="flex-1 overflow-auto h-full bg-rose-100"></div>
 </div>
+
+<button nz-button nzType="primary" nzSize="large" (click)="updateGraphData()">
+  <span nz-icon nzType="save"></span>
+  Save
+</button>
