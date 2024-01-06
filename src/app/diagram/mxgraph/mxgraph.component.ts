@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   OnInit,
-  SimpleChanges,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -14,11 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { GraphComponent } from './graph/graph.component';
-import {
-  NzNotificationPlacement,
-  NzNotificationService,
-} from 'ng-zorro-antd/notification';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 import * as mxgraph from 'mxgraph';
 import _ from 'lodash';
@@ -30,6 +25,8 @@ export type Block = {
   y: number;
   width: number;
   height: number;
+  isStart?: boolean;
+  isEnd?: boolean;
 };
 
 export type Edge = {
@@ -37,8 +34,8 @@ export type Edge = {
   label: string;
   source: string;
   target: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 };
 
 export type Graph = {
@@ -49,7 +46,7 @@ export type Graph = {
 @Component({
   selector: 'app-mxgraph',
   standalone: true,
-  imports: [CommonModule, NzButtonComponent, NzIconModule, GraphComponent],
+  imports: [CommonModule, NzButtonComponent, NzIconModule],
   templateUrl: './mxgraph.component.html',
   styleUrl: './mxgraph.component.css',
 })
@@ -68,7 +65,7 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.http.get('http://localhost:3000/graphData').subscribe((data) => {
       this.graphData = data as Graph;
-      if (this.graphData.blocks.length > 0 || this.graphData.edges.length > 0) {
+      if (this.graphData.blocks.length > 0) {
         this.graph.getModel().beginUpdate();
         try {
           const cells = this.graph.getChildCells(this.parent);
@@ -86,13 +83,15 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
               height
             );
             acc[id] = vertex;
+            const style = this.graph.getStylesheet().getDefaultVertexStyle();
+            style['shadow'] = true;
+            style['shadowColor'] = '#C0C0C0';
+            this.graph.getStylesheet().putCellStyle('shadowStyle', style);
+            this.graph.setCellStyle('shadowStyle', [vertex]);
             return acc;
           }, {} as Record<string, mxCell>);
-          this.setBlockBackground();
           this.graphData.edges.forEach((edge) => {
-            const { id, label, source, target } = edge;
-            const geometry = new mxGeometry();
-            geometry.points = [new mxPoint(edge.x, edge.y)];
+            const { id, label, source, target, x, y } = edge;
             const newEdge = this.graph.insertEdge(
               this.parent,
               id,
@@ -100,11 +99,25 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
               blocksMap[source],
               blocksMap[target]
             );
-            this.graph.getModel().setGeometry(newEdge, geometry);
+            if (x && y) {
+              const geometry = new mxGeometry();
+              geometry.points = [new mxPoint(x, y)];
+              this.graph.getModel().setGeometry(newEdge, geometry);
+            }
           });
+          this.setBlockBackground();
         } finally {
           this.graph.getModel().endUpdate();
         }
+      } else {
+        const startBlock = this.addBlock('start', 'Start', 0, 0, 80, 30);
+        const endBlock = this.addBlock('end', 'End', 0, 50, 80, 30);
+        const style = this.graph.getStylesheet().getDefaultVertexStyle();
+        style['shadow'] = true;
+        style['shadowColor'] = '#C0C0C0';
+        this.graph.getStylesheet().putCellStyle('shadowStyle', style);
+        this.graph.setCellStyle('shadowStyle', [startBlock, endBlock]);
+        this.setBlockBackground();
       }
     });
   }
@@ -122,35 +135,15 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     console.log('Cell double clicked: ', cell);
   }
 
-  onCellsMoved(cells: mxCell[], dx: number, dy: number) {}
-
   onNewEdgeConnected(edge: mxCell) {
     const id = uuidv4();
     edge.setId(id);
     this.syncGraphData();
   }
 
-  onEdgeChanged(edge: any) {
-    // if (edge.source != null && edge.target != null) {
-    // const graphData = _.cloneDeep(this.graphData);
-    // const index = graphData.edges.findIndex((edge) => edge.id === edge.id);
-    // if (index > -1) {
-    //   graphData.edges[index] = {
-    //     id: edge.id,
-    //     label: edge.value,
-    //     source: edge.source.id,
-    //     target: edge.target.id,
-    //   };
-    // }
-    // this.graphData = graphData;
-    // }
-  }
-
   setUpGraph() {
     mxEvent.disableContextMenu(this.container);
-
     this.graph = new mxGraph(this.container);
-
     this.graph.setCellsEditable(false);
     this.graph.isCellMovable = (cell) => !cell.isEdge();
     this.graph.isLabelMovable = () => false;
@@ -162,13 +155,10 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     let style = this.graph.getStylesheet().getDefaultEdgeStyle();
     style['edgeStyle'] = mxEdgeStyle.ElbowConnector;
     style['rounded'] = true;
-    this.addBlock('Start', 0, 0, 80, 30);
-    this.addBlock('End', 0, 0, 80, 30);
   }
 
   addEventListeners() {
     const connectionHandler = this.graph.connectionHandler;
-
     connectionHandler.addListener(mxEvent.END, (sender, evt) => {
       const edge = evt.getProperty('cell');
       if (edge) {
@@ -179,46 +169,32 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
         }
       }
     });
-
     this.graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
       const cell = evt.getProperty('cell');
       if (cell) {
         this.onCellDoubleClicked(cell);
       }
     });
-
     this.graph.addListener(mxEvent.CELL_CONNECTED, (sender, evt) => {
       const edge = evt.getProperty('edge');
       const terminal = evt.getProperty('terminal');
       const source = evt.getProperty('source');
       const target = evt.getProperty('target');
-
       if (edge != null && !source && terminal == undefined) {
         this.graph.removeCells([edge]);
       } else if (edge != null && !target && terminal == undefined) {
         this.graph.removeCells([edge]);
       }
     });
-
     this.graph.getModel().addListener(mxEvent.CHANGE, (sender, evt) => {
       this.syncGraphData();
     });
-
     this.graph.addListener(mxEvent.CELLS_MOVED, (sender, evt) => {
       this.syncGraphData();
     });
-
     this.graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender) => {
       const cells = this.graph.getSelectionCells();
       this.selectedCells = cells;
-    });
-
-    this.graph.addListener(mxEvent.MOVE_CELLS, (sender, evt) => {
-      const cells = evt.getProperty('cells');
-      const dx = evt.getProperty('dx');
-      const dy = evt.getProperty('dy');
-
-      this.onCellsMoved(cells, dx, dy);
     });
   }
 
@@ -250,6 +226,13 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
             x: cell.geometry.points[0].x,
             y: cell.geometry.points[0].y,
           });
+        } else {
+          graphData.edges.push({
+            id: cell.id,
+            label: cell.value,
+            source: cell.source.id,
+            target: cell.target.id,
+          });
         }
       }
     }
@@ -269,12 +252,20 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     graph.getStylesheet().putDefaultEdgeStyle(style);
   }
 
-  addBlock(label = 'New block', x = 0, y = 0, width = 80, height = 30) {
+  addBlock(
+    id = uuidv4(),
+    label = 'New block',
+    x = 0,
+    y = 0,
+    width = 80,
+    height = 30
+  ): mxCell {
     this.graph.getModel().beginUpdate();
+    let vertex: mxCell;
     try {
-      const vertex = this.graph.insertVertex(
+      vertex = this.graph.insertVertex(
         this.parent,
-        uuidv4(),
+        id,
         label,
         x,
         y,
@@ -284,10 +275,7 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     } finally {
       this.graph.getModel().endUpdate();
     }
-  }
-
-  onGraphDataChange(newGraphData: Graph) {
-    this.graphData = newGraphData;
+    return vertex;
   }
 
   updateGraphData(): void {
@@ -310,11 +298,13 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
   removeCells() {
     const cells = this.graph.getSelectionCells();
     this.graph.removeCells(cells);
-    this.graphData.blocks = this.graphData.blocks.filter(
-      (block) => !cells.find((cell) => cell.id === block.id)
-    );
-    this.graphData.edges = this.graphData.edges.filter(
-      (edge) => !cells.find((cell) => cell.id === edge.id)
-    );
+  }
+
+  zoomIn() {
+    this.graph.zoomIn();
+  }
+
+  zoomOut() {
+    this.graph.zoomOut();
   }
 }

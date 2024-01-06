@@ -254,7 +254,7 @@ declare class mxGraph {
   zoomIn();
   zoomOut();
   zoomActual();
-  zoomTo(scale, center);
+  zoomTo(scale, center?);
   zoom(factor, center);
   zoomToRect(rect);
   fit(border, keepOrigin);

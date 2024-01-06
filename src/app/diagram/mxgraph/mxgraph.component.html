@@ -8,6 +8,14 @@
       <span nz-icon nzType="delete"></span>
       Xóa
     </button>
+    <button nz-button nzType="primary" nzSize="large" (click)="zoomIn()">
+      <span nz-icon nzType="zoom-in"></span>
+      Phóng to
+    </button>
+    <button nz-button nzType="primary" nzSize="large" (click)="zoomOut()">
+      <span nz-icon nzType="zoom-out"></span>
+      Thu nhỏ
+    </button>
   </div>
   <div #graphContainer id="graphContainer" class="flex-1 overflow-auto h-full bg-rose-100"></div>
 </div>

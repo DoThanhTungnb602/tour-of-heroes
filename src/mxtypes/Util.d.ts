@@ -148,4 +148,11 @@ declare class mxPoint {
   clone();
 }
 
+declare class mxSidebar {
+  constructor(container: any, editor: any);
+
+  addPalette(id: string, title: string, expanded?: boolean);
+  addCells(cells: mxCell[]);
+}
+
 /******************      Util end      **************/

@@ -1,7 +1,0 @@
-div{
-  user-select: none;
-}
-:host{
-  flex: 1;
-  overflow: auto;
-}
