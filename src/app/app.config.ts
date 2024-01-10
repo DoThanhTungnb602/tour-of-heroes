@@ -28,6 +28,7 @@ import {
   PlusOutline,
 } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
+import { DragulaModule } from 'ng2-dragula';
 
 const icons: IconDefinition[] = [PlusOutline, DownloadOutline, FileTwoTone];
 
@@ -50,6 +51,7 @@ export const appConfig: ApplicationConfig = {
       }),
       BrowserModule,
       NzIconModule.forRoot(icons),
+      DragulaModule.forRoot(),
     ]),
     provideAnimations(),
     {

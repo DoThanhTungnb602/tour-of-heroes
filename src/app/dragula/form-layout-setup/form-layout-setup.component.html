@@ -1,0 +1,73 @@
+<div>
+  <div class="wrapper grid grid-cols-[300px_minmax(300px,_1fr)] w-full gap-5 mt-5">
+    <div class="container bg-emerald-100 p-2 flex flex-col gap-2" dragula="FORM_LAYOUT">
+      @if(formData !== null){
+      @for (control of formData.controls; track $index) {
+      <nz-form-item class="select-none cursor-grab p-2 bg-rose-100 m-0">
+        <nz-form-label class="cursor-grab pointer-events-none">
+          {{control.label}}
+        </nz-form-label>
+        <nz-form-control class="pointer-events-none">
+          @if (['text', 'password', 'email', 'search', 'tel', 'url'].includes(control.type)) {
+          <input nz-input [type]="control.type" />
+          }
+          @if(control.type === 'number'){
+          <nz-input-number />
+          }
+          @if(control.type === 'textarea'){
+          <textarea nz-input></textarea>
+          }
+          @if(control.type === 'checkbox') {
+          <label nz-checkbox></label>
+          }
+          @if(control.type === 'date') {
+          <nz-date-picker [nzPlaceHolder]="control.label" />
+          }
+          @if(control.type === 'radio') {
+          <nz-radio-group>
+            @for (option of control.radioOptions; track $index) {
+            <label nz-radio [nzValue]="option.value">{{option.label}}</label>
+            }
+          </nz-radio-group>
+          }
+          @if(control.type === 'select') {
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+            @for (option of control.selectOptions; track $index) {
+            <nz-option [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+            }
+          </nz-select>
+          }
+          @if(control.type === 'uploadImage') {
+          <nz-upload class="avatar-uploader" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzName="avatar"
+            nzListType="picture-card" [nzShowUploadList]="false" >
+            <span class="upload-icon" nz-icon [nzType]="'plus'"></span>
+            <div class="ant-upload-text">Upload</div>
+          </nz-upload>
+          }
+          @if (control.type === 'uploadMultiImage') {
+          <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="picture-card"
+            >
+            <div>
+              <span nz-icon [nzType]="'plus'"></span>
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+          }
+          @if (control.type === 'uploadFiles') {
+          <nz-upload nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" nzListType="text">
+            <button nz-button>
+              <span nz-icon [nzType]="'upload'"></span> Click to Upload
+            </button>
+            </nz-upload>
+          }
+        </nz-form-control>
+      </nz-form-item>
+      }
+      }
+    </div>
+
+    <div class="container bg-emerald-100 p-2 flex flex-col gap-2" dragula="FORM_LAYOUT">
+
+    </div>
+  </div>
+</div>

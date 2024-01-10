@@ -17,6 +17,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 import * as mxgraph from 'mxgraph';
 import _ from 'lodash';
+import { NzModalComponent, NzModalModule } from 'ng-zorro-antd/modal';
+import { FormsModule } from '@angular/forms';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 export type Block = {
   id: string;
@@ -46,11 +49,21 @@ export type Graph = {
 @Component({
   selector: 'app-mxgraph',
   standalone: true,
-  imports: [CommonModule, NzButtonComponent, NzIconModule],
+  imports: [
+    CommonModule,
+    NzButtonComponent,
+    NzIconModule,
+    NzModalModule,
+    FormsModule,
+    NzInputModule,
+  ],
   templateUrl: './mxgraph.component.html',
   styleUrl: './mxgraph.component.css',
 })
 export default class MxgraphComponent implements OnInit, AfterViewInit {
+  onChange() {
+    console.log('onChange', this.currentEdgeLabel);
+  }
   private http = inject(HttpClient);
 
   @ViewChild('graphContainer') containerElementRef!: ElementRef;
@@ -59,6 +72,36 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
   private graphData!: Graph;
   private parent!: any;
   public selectedCells: mxCell[] = [];
+  public isVisible = false;
+  public currentEdgeLabel: string = '';
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.updateEdgeLabel(this.selectedCells[0]);
+    this.isVisible = false;
+  }
+
+  updateEdgeLabel(edge: mxCell) {
+    const newEdge = _.cloneDeep(edge);
+    newEdge.value = this.currentEdgeLabel;
+    console.log('Label: ', this.currentEdgeLabel);
+    console.log('newEdge', newEdge);
+    this.graph.getModel().beginUpdate();
+    try {
+      this.graph.getModel().setValue(edge, newEdge);
+    } finally {
+      this.graph.getModel().endUpdate();
+    }
+    this.syncGraphData();
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
 
   constructor(private notification: NzNotificationService) {}
 
@@ -132,7 +175,10 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
   }
 
   onCellDoubleClicked(cell: mxCell) {
-    console.log('Cell double clicked: ', cell);
+    if (cell.edge) {
+      this.currentEdgeLabel = cell.value;
+      this.showModal();
+    }
   }
 
   onNewEdgeConnected(edge: mxCell) {
@@ -155,6 +201,12 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     let style = this.graph.getStylesheet().getDefaultEdgeStyle();
     style['edgeStyle'] = mxEdgeStyle.ElbowConnector;
     style['rounded'] = true;
+    style['verticalAlign'] = 'top';
+    style['labelBackgroundColor'] = '#67e8f9';
+    style['labelPosition'] = 'center';
+    style['verticalLabelPosition'] = 'bottom';
+    style['labelPadding'] = 10;
+    style['labelRadius'] = 10;
   }
 
   addEventListeners() {

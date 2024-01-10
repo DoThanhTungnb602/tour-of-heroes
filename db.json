@@ -10,6 +10,20 @@
       "name": "Procrastinators Meeting Delayed Again"
     }
   ],
+  "form-layout": [
+    {
+      "controlId": "firstName",
+      "col": 1,
+      "row": 1,
+      "colSpan": 1
+    },
+    {
+      "controlId": "lastName",
+      "col": 1,
+      "row": 1,
+      "colSpan": 1
+    }
+  ],
   "form-data": {
     "formLayout": "horizontal",
     "controls": [
@@ -56,13 +70,6 @@
         "label": "This is a checkbox?",
         "value": "false",
         "type": "checkbox",
-        "validators": {}
-      },
-      {
-        "name": "lightDark",
-        "label": "Do you like toggles?",
-        "value": "false",
-        "type": "toggle",
         "validators": {}
       },
       {

@@ -17,10 +17,16 @@
       Thu nhỏ
     </button>
   </div>
-  <div #graphContainer id="graphContainer" class="flex-1 overflow-auto h-full bg-rose-100"></div>
+  <div #graphContainer id="graphContainer" class="flex-1 overflow-auto h-full bg-amber-50"></div>
 </div>
 
 <button nz-button nzType="primary" nzSize="large" (click)="updateGraphData()">
   <span nz-icon nzType="save"></span>
   Save
 </button>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Edge label" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <input nz-input placeholder="Label" [(ngModel)]="currentEdgeLabel" type="text" />
+  </ng-container>
+</nz-modal>
