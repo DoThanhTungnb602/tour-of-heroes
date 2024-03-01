@@ -2,14 +2,19 @@
   @for (crisis of crises$ | async; track crisis.id) {
   <li [class.selected]="crisis.id === selectedId">
     <a [routerLink]="[crisis.id]">
-      <span class="badge">{{crisis.id}}</span> {{crisis.name}}
+      <span class="badge">{{ crisis.id }}</span> {{ crisis.name }}
     </a>
-    <button type="button" class="delete" title="delete crisis" (click)="delete(crisis)">x</button>
+    <button
+      type="button"
+      class="delete"
+      title="delete crisis"
+      (click)="delete(crisis)"
+    >
+      x
+    </button>
   </li>
   } @empty {
-  <li>
-    <span class="badge">empty</span> No crisis yet.
-  </li>
+  <li><span class="badge">empty</span> No crisis yet.</li>
   }
 </ul>
 

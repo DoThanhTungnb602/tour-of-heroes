@@ -85,13 +85,9 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
   }
 
   updateEdgeLabel(edge: mxCell) {
-    const newEdge = _.cloneDeep(edge);
-    newEdge.value = this.currentEdgeLabel;
-    console.log('Label: ', this.currentEdgeLabel);
-    console.log('newEdge', newEdge);
     this.graph.getModel().beginUpdate();
     try {
-      this.graph.getModel().setValue(edge, newEdge);
+      this.graph.getModel().setValue(edge, this.currentEdgeLabel);
     } finally {
       this.graph.getModel().endUpdate();
     }
@@ -153,8 +149,8 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
           this.graph.getModel().endUpdate();
         }
       } else {
-        const startBlock = this.addBlock('start', 'Start', 0, 0, 80, 30);
-        const endBlock = this.addBlock('end', 'End', 0, 50, 80, 30);
+        const startBlock = this.addBlock('start', 'Start', 50, 50, 80, 30);
+        const endBlock = this.addBlock('end', 'End', 800, 50, 80, 30);
         const style = this.graph.getStylesheet().getDefaultVertexStyle();
         style['shadow'] = true;
         style['shadowColor'] = '#C0C0C0';
@@ -176,6 +172,8 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
 
   onCellDoubleClicked(cell: mxCell) {
     if (cell.edge) {
+      console.log("Edge clicked: ", cell);
+      console.log("Model: ", this.graph.getModel().cells)
       this.currentEdgeLabel = cell.value;
       this.showModal();
     }
@@ -202,11 +200,10 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
     style['edgeStyle'] = mxEdgeStyle.ElbowConnector;
     style['rounded'] = true;
     style['verticalAlign'] = 'top';
-    style['labelBackgroundColor'] = '#67e8f9';
+    style['labelBackgroundColor'] = '#bae6fd';
     style['labelPosition'] = 'center';
     style['verticalLabelPosition'] = 'bottom';
     style['labelPadding'] = 10;
-    style['labelRadius'] = 10;
   }
 
   addEventListeners() {
@@ -349,7 +346,9 @@ export default class MxgraphComponent implements OnInit, AfterViewInit {
 
   removeCells() {
     const cells = this.graph.getSelectionCells();
+    console.log('Before remove: ', this.graph.getModel().cells);
     this.graph.removeCells(cells);
+    console.log('After remove: ', this.graph.getModel().cells);
   }
 
   zoomIn() {

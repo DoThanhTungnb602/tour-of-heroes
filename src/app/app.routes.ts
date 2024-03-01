@@ -43,6 +43,10 @@ export const routes: Routes = [
     loadChildren: () => import('./dragula/routes'),
   },
   {
+    path: 'charts',
+    loadChildren: () => import('./chart/routes'),
+  },
+  {
     path: 'compose',
     loadComponent: () =>
       import('./shared/components/compose-message/compose-message.component'),

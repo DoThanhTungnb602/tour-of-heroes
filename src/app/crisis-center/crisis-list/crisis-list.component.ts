@@ -1,15 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ActivatedRoute,
-  RouterLink,
-  RouterOutlet,
-  ParamMap,
-} from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { CrisisService } from '../../services/crisis.service';
 import { Crisis } from '../../models/crisis';
 import { MessageService } from '../../services/message.service';
-import { Observable, Subject, map, switchMap, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-crisis-list',
