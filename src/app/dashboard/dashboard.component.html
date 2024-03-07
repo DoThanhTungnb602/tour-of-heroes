@@ -1,10 +1,16 @@
 <h2>Top Heroes</h2>
 <div class="heroes-menu">
   @for (hero of heroes; track hero.id) {
-  <a routerLink="/{{hero.id}}">
-    {{hero.name}}
+  <a routerLink="/{{ hero.id }}">
+    {{ hero.name }}
   </a>
   }
+
+  <nz-date-picker
+    nzMode="week"
+    [(ngModel)]="date"
+    (ngModelChange)="getWeek($event)"
+  ></nz-date-picker>
 </div>
 
 <app-hero-search />
