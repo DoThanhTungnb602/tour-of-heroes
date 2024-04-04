@@ -8,11 +8,13 @@ import { MessageService } from '../../services/message.service';
 
 import HeroDetailComponent from '../hero-detail/hero-detail.component';
 import { Observable, switchMap } from 'rxjs';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-hero-list',
   standalone: true,
-  imports: [CommonModule, HeroDetailComponent, RouterLink],
+  imports: [CommonModule, HeroDetailComponent, RouterLink, CKEditorModule],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.css',
 })
@@ -23,6 +25,7 @@ export default class HeroListComponent {
 
   public selectedId: number = 0;
   public heroes$!: Observable<Hero[]>;
+  public Editor = ClassicEditor;
 
   ngOnInit() {
     // this.heroes$ = this.route.paramMap.pipe(
