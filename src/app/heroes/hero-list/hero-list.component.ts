@@ -4,24 +4,35 @@ import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 
 import { Hero } from '../../models/hero';
 import { HeroService } from '../../services/hero.service';
-import { MessageService } from '../../services/message.service';
+import { MessageService as AppMessageService } from '../../services/message.service';
 
 import HeroDetailComponent from '../hero-detail/hero-detail.component';
 import { Observable, switchMap } from 'rxjs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-hero-list',
   standalone: true,
-  imports: [CommonModule, HeroDetailComponent, RouterLink, CKEditorModule],
+  imports: [
+    CommonModule,
+    HeroDetailComponent,
+    RouterLink,
+    CKEditorModule,
+    ConfirmDialogModule,
+    ButtonModule
+  ],
   templateUrl: './hero-list.component.html',
   styleUrl: './hero-list.component.css',
 })
 export default class HeroListComponent {
   private heroService: HeroService = inject(HeroService);
-  private messageService: MessageService = inject(MessageService);
+  private messageService: AppMessageService = inject(AppMessageService);
   private route: ActivatedRoute = inject(ActivatedRoute);
+
 
   public selectedId: number = 0;
   public heroes$!: Observable<Hero[]>;
@@ -36,6 +47,33 @@ export default class HeroListComponent {
     // );
     this.heroes$ = this.heroService.getHeroes();
   }
+
+  // confirm(event: Event) {
+  //   this.confirmationService.confirm({
+  //     target: event.target as EventTarget,
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     acceptIcon: 'none',
+  //     rejectIcon: 'none',
+  //     rejectButtonStyleClass: 'p-button-text',
+  //     accept: () => {
+  //       this.primeNgMessageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmed',
+  //         detail: 'You have accepted',
+  //       });
+  //     },
+  //     reject: () => {
+  //       this.primeNgMessageService.add({
+  //         severity: 'error',
+  //         summary: 'Rejected',
+  //         detail: 'You have rejected',
+  //         life: 3000,
+  //       });
+  //     },
+  //   });
+  // }
 
   delete(hero: Hero): void {
     this.heroService.deleteHero(hero.id).subscribe((_) => {
